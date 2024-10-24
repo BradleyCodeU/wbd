@@ -1,0 +1,50 @@
+/* CSS files add styling rules to your content */
+
+body {
+    font-family: helvetica, arial, sans-serif;
+    margin: 2em;
+    background-color:#352573
+  }
+  
+  h1 {
+    font-style: italic;
+    color: #373fff;
+  }
+  
+  /* p{
+    display:inline;
+  } */
+  span{
+    margin:5px 0px 5px 25px;
+    border-bottom:3px solid white;
+  /*   padding:5px;
+    margin:5px; */
+  }
+  label{
+  /*   padding:5px;
+    margin:5px; */
+  }
+  :checked + label{
+    text-shadow:1px 0px 0px black;
+  /*   background-color:#eeeeee; */
+  }
+  
+  span:hover{
+  /*   background-color:#eeeeee; */
+    border-bottom:3px solid black;
+  }
+  
+  div#canvasDiv, div#controls{
+    background-color:#ffffff;
+    border: 5px outset gray;
+  }
+  
+  #penModes{
+    display:inline;
+    background-color:#f25a42;
+  }
+  
+  html, body {
+    margin: 0; height: 100%; overflow: hidden
+  }
+  

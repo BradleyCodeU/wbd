@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>whiteboard</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/Dot.js" defer></script>
+    <script src="/Word.js" defer></script>
+    <script src="/script.js" defer></script>
+  </head>
+  <body>
+    <div id="controls">
+      <input type="color" id="colorPicker" />
+
+      <span>
+        <input type="radio" name="PencilEraserTool" id="Pencil" checked />
+        <label for="Pencil">
+          ✏️
+          <input
+            type="range"
+            name="points"
+            value="7"
+            min="5"
+            max="50"
+            id="pSize"
+          />
+        </label>
+      </span>
+      <span>
+        <input type="radio" name="PencilEraserTool" id="Text" />
+        <label for="Pencil">
+          🆎
+          <input
+            type="range"
+            name="points"
+            value="15"
+            min="5"
+            max="50"
+            id="tSize"
+          />
+        </label>
+      </span>
+      
+     
+
+      <span>
+        <input type="radio" name="PencilEraserTool" id="Eraser" />
+        <label for="Eraser">
+          🩹
+          <input
+            type="range"
+            name="points"
+            value="30"
+            min="10"
+            max="50"
+            id="eSize"
+          />
+        </label>
+        <button onclick="erase()">
+          Clear
+        </button>
+      </span>
+
+      
+       <span>
+         <input type="radio" name="PencilEraserTool" id="Spray" /> 
+        <label for="Spray">
+          💨
+        </label>
+      </span>
+      
+      
+
+      <span>
+        <input type="checkbox" name="ColorMode" id="confetti" />
+        <label for="confetti">
+           🎉
+        </label>
+      </span>
+      
+      <span>
+        <input type="checkbox" name="Wiggle" id="wiggle" onclick="doWiggle()"/>
+        <label for="wiggle">
+           🐛
+        </label>
+      </span>
+    </div>
+
+    <div id="canvasDiv"></div>
+  </body>
+</html>
