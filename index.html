@@ -18,7 +18,7 @@
       <input type="color" id="colorPicker" />
 
       <span>
-        <input type="radio" name="PencilEraserTool" id="Pencil" checked />
+        <input type="radio" name="DrawingTools" id="Pencil" checked />
         <label for="Pencil">
           ✏️
           <input
@@ -32,7 +32,7 @@
         </label>
       </span>
       <span>
-        <input type="radio" name="PencilEraserTool" id="Text" />
+        <input type="radio" name="DrawingTools" id="Text" />
         <label for="Pencil">
           🆎
           <input
@@ -49,7 +49,7 @@
      
 
       <span>
-        <input type="radio" name="PencilEraserTool" id="Eraser" />
+        <input type="radio" name="DrawingTools" id="Eraser" />
         <label for="Eraser">
           🩹
           <input
@@ -61,18 +61,24 @@
             id="eSize"
           />
         </label>
-        <button onclick="erase()">
+        <button onclick="clearAll()">
           Clear
         </button>
       </span>
 
       
        <span>
-         <input type="radio" name="PencilEraserTool" id="Spray" /> 
+         <input type="radio" name="DrawingTools" id="Spray" /> 
         <label for="Spray">
           💨
         </label>
       </span>
+      <span>
+        <input type="radio" name="DrawingTools" id="Move" /> 
+       <label for="Move">
+        🤏
+       </label>
+     </span>
       
       
 

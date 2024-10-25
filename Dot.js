@@ -8,6 +8,20 @@ class Dot {
       this.py = pY; // previous y
       this.r = size;
       this.color = color;
+      this.isGrabbed = false;
+    }
+
+    moveTo(newx,newy){
+      this.px = newx + (this.x - this.px);
+        this.py = newy + (this.y - this.py);
+        this.x = newx;
+        this.y = newy;
+        this.startingX = newx;
+        this.startingY = newy;
+    }
+
+    getDistance(otherX,otherY){
+      return Math.min(dist(this.startingX, this.startingY,otherX,otherY),dist(this.px, this.py,otherX,otherY))
     }
     
     wiggle(){

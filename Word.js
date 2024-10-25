@@ -4,20 +4,23 @@ class Word extends Dot {
       this.text = text;
     }
     show() {
+      
       //noStroke();
       strokeWeight(1);
+      
       stroke(255);
       fill(this.color);
       // if (this.px != null && this.py != null) {
       //   line(this.x, this.y, this.px, this.py);
       // }
       //noStroke();
-      //rect(this.x-this.r*.5, this.y-this.r*.5, this.r, this.r);
+      
+      
       //ellipse(this.x, this.y, this.r, this.r);
       textSize(this.r*4);
       textAlign(LEFT, CENTER);
       text(this.text, this.x, this.y);
-      if(textButton.checked){
+      if(textButton.checked || moveButton.checked){
         strokeWeight(1);
         stroke(0);
         fill(255);

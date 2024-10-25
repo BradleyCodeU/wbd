@@ -7,6 +7,7 @@ const pencilButton = document.getElementById("Pencil");
 const textButton = document.getElementById("Text");
 const eraserButton = document.getElementById("Eraser");
 const sprayButton = document.getElementById("Spray");
+const moveButton = document.getElementById("Move");
 const sizeRange = document.getElementById("pSize");
 const fontsizeRange = document.getElementById("tSize");
 const EsizeRange = document.getElementById("eSize");
@@ -46,39 +47,39 @@ function drawEraser(minimumDistance) {
   pop();
 }
 
-function addText(){
-  textButton.checked = false;
-    setDotColor();
-    let text = prompt();
-    let fontSize = parseInt(fontsizeRange.value);
-    dots[dots.length] = new Word(
-      mouseX,
-      mouseY,
-      null,
-      null,
-      dotColor,
-      fontSize,
-      text
-    );
+function addText() {
+  //textButton.checked = false;
+  setDotColor();
+  let text = prompt();
+  let fontSize = parseInt(fontsizeRange.value);
+  dots[dots.length] = new Word(
+    mouseX,
+    mouseY,
+    null,
+    null,
+    dotColor,
+    fontSize,
+    text
+  );
 }
 
-function editWord(someWord){
+function editWord(someWord) {
   textButton.checked = false;
-  
-  let newtext = prompt("EDIT:",someWord.text)
+
+  let newtext = prompt("EDIT:", someWord.text)
   someWord.r = fontsizeRange.value;
-  if(newtext != null){
+  if (newtext != null) {
     someWord.editWord(newtext);
   }
-  
-  dots.splice(-1);
+
+  //dots.splice(-1);
 }
 
 function changeDots() {
   if (mouseY < 0) {
     return;
   }
- 
+
   // PENCIL
   if (mouseIsPressed && pencilButton.checked == true) {
     setDotColor();
@@ -92,28 +93,18 @@ function changeDots() {
       penSize
     );
     //length++;
-    // TEXT
-  } else if (mouseIsPressed && textButton.checked == true) {
-    //alert();
-    for(let each of dots){
-      if(each instanceof Word && dist(each.x,each.y,mouseX,mouseY) < 7.1){
-        editWord(each);
-        return;
-      }
-    }
-      addText();
-    //length++;
+
     // ERASER
   } else if (mouseIsPressed && eraserButton.checked == true) {
     let minimumDistance = parseInt(EsizeRange.value);
     //alert(typeof minimumDistance)
     drawEraser(minimumDistance);
     for (let i = 0; i < dots.length; i++) {
-      if (dist(mouseX, mouseY, dots[i].x, dots[i].y) < minimumDistance) {
+      if (dots[i].getDistance(mouseX, mouseY) < minimumDistance) {
         dots[i].color = "#ffffff";
         dots[i].show();
         //length--;
-        dots.pop();
+        dots.splice(i, 1);
       }
     }
     // SPRAY
@@ -163,8 +154,12 @@ function changeDots() {
       penSize
     );
     //length++;
+
   }
+
 }
+
+
 
 function mousePressed() {
   //alert()
@@ -173,63 +168,107 @@ function mousePressed() {
   changeDots()
   //dots[dots.length] = new Dot(mouseX, mouseY, null, null, dotColor, penSize);
   //length++;
+  
+  // ENABLE MOVE
+  if (mouseIsPressed && moveButton.checked == true) {
+    let minimumDistance = parseInt(EsizeRange.value);
+    for (let i = 0; i < dots.length; i++) {
+      if (dots[i].getDistance(mouseX, mouseY) < minimumDistance) {
+
+
+        dots[i].isGrabbed = true;
+
+      }
+    }
+    // TEXT
+  } else if (mouseIsPressed && textButton.checked == true && mouseY > 15) {
+    //alert();
+    for (let each of dots) {
+      if (each instanceof Word && dist(each.x, each.y, mouseX, mouseY) < 7.1) {
+        editWord(each);
+        return;
+      }
+    }
+    addText();
+    //length++;
+  }
+
   loop();
 }
 
-function draw() {
-  //alert("drawy")
-  if (!mouseIsPressed && !wiggleCheckbox.value) {
-    noLoop();
-  }
+  function mouseDragged() {
+    if (mouseIsPressed && moveButton.checked == true) {
+      for (let i = 0; i < dots.length; i++) {
+        if (dots[i].isGrabbed) {
+          dots[i].moveTo(mouseX, mouseY)
+        }
 
-  background(245);
-  if(mouseIsPressed){
-    changeDots();
-  }
-  if(wiggleCheckbox.value){
-    doWiggle();
-  }
-  
-
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].show();
-  }
-}
-
-function erase() {
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].color = "#ffffff";
-    dots[i].show();
-  }
-  dots = [];
-  dots.length = 0;
-}
-
-function setDotColor() {
-  if (confettiCheckbox.checked) {
-    colorMode(HSB, 100);
-    let h = int(random(0, 100));
-    let s = int(random(90, 100));
-    let b = int(random(90, 100));
-
-    dotColor = color(h, s, b);
-  } else {
-    colorMode(RGB, 100);
-    dotColor = color(colorGet.value);
-  }
-}
-
-function doWiggle(){
-  if (wiggleCheckbox.checked) {
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].wiggle();
+      }
     }
   }
-}
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
+  function mouseReleased() {
+    if (moveButton.checked == true) {
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].isGrabbed = false;
+      }
+    }
+  }
+
+  function draw() {
+    //alert("drawy")
+    if (!mouseIsPressed && !wiggleCheckbox.value) {
+      noLoop();
+    }
+
+    background(245);
+    if (mouseIsPressed) {
+      changeDots();
+    }
+    if (wiggleCheckbox.value) {
+      doWiggle();
+    }
+
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].show();
+    }
+  }
+
+  function clearAll() {
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].color = "#ffffff";
+      dots[i].show();
+    }
+    dots = [];
+    dots.length = 0;
+  }
+
+  function setDotColor() {
+    if (confettiCheckbox.checked) {
+      colorMode(HSB, 100);
+      let h = int(random(0, 100));
+      let s = int(random(90, 100));
+      let b = int(random(90, 100));
+
+      dotColor = color(h, s, b);
+    } else {
+      colorMode(RGB, 100);
+      dotColor = color(colorGet.value);
+    }
+  }
+
+  function doWiggle() {
+    if (wiggleCheckbox.checked) {
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].wiggle();
+      }
+    }
+  }
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
 
 
 
