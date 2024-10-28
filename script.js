@@ -1,6 +1,9 @@
 /*global loop,colorMode,RGB,HSB,int,abs,angleMode,append,background,beginShape,bezier,box,camera,ceil,CENTER,color,cone,cos,createCanvas,createCanvas,createGraphics,curveVertex,cylinder,DEGREES,displayHeight,displayWidth,dist,div,DOWN_ARROW,ellipse,endShape,fill,floor,frameCount,frameRate,height,image,key,keyCode,keyIsDown,keyIsPressed,keyIsPressed,keyPressed,LEFT,LEFT_ARROW,lerpColor,line,loadImage,loadJSON,loadSound,map,mouseIsPressed,mouseX,mouseY,noFill,noLoop,normalMaterial,noStroke,p5,plane,point,pointLight,pop,push,push,RADIANS,radians,random,rect,resizeCanvas,resizeCanvas,RIGHT,RIGHT_ARROW,rotate,rotateX,rotateY,rotateZ,round,round,scale,shuffle,sin,sphere,stroke,strokeWeight,text,textAlign,textFont,textSize,texture,textWidth,torus,translate,triangle,UP_ARROW,WEBGL,width,windowHeight,windowHeight,windowWidth,world */
 
 let dots = [];
+let selectBoxStartPos;
+let selectBoxEndPos;
+let isDrawingSelectBox = true;
 //let length = 0;
 const colorGet = document.getElementById("colorPicker");
 const pencilButton = document.getElementById("Pencil");
@@ -8,6 +11,7 @@ const textButton = document.getElementById("Text");
 const eraserButton = document.getElementById("Eraser");
 const sprayButton = document.getElementById("Spray");
 const moveButton = document.getElementById("Move");
+const selectBoxButton = document.getElementById("SelectBox");
 const sizeRange = document.getElementById("pSize");
 const fontsizeRange = document.getElementById("tSize");
 const EsizeRange = document.getElementById("eSize");
@@ -191,6 +195,10 @@ function mousePressed() {
     }
     addText();
     //length++;
+  // SELECT BOX
+  } else if (mouseIsPressed && selectBoxButton.checked == true && isDrawingSelectBox && mouseY > 15) {
+    
+    startPos = createVector(mouseX, mouseY);
   }
 
   loop();
@@ -204,7 +212,8 @@ function mousePressed() {
         }
 
       }
-    }
+    } 
+    
   }
 
   function mouseReleased() {
@@ -222,7 +231,16 @@ function mousePressed() {
     }
 
     background(245);
-    if (mouseIsPressed) {
+    // select box
+    if (mouseIsPressed && selectBoxButton.checked == true && isDrawingSelectBox && mouseY > 15) {
+      //noLoop();
+      push()
+      noFill();
+      stroke(sin(frameCount*7)*50+70,sin(frameCount*9)*50+70,sin(frameCount*8)*50+70)
+      rect(startPos.x, startPos.y, mouseX -startPos.x, mouseY-startPos.y);
+      pop()
+    }
+    else if (mouseIsPressed) {
       changeDots();
     }
     if (wiggleCheckbox.value) {
