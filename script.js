@@ -19,6 +19,9 @@ const EsizeRange = document.getElementById("eSize");
 const confettiCheckbox = document.getElementById("confetti");
 const wiggleCheckbox = document.getElementById("wiggle");
 const loadDropdownMenu = document.getElementById("loadDropdown");
+const zoomInButton = document.getElementById("zoomInButton");
+const zoomOutButton = document.getElementById("zoomOutButton");
+const grabPageButton = document.getElementById("GrabPage");
 
 saves = JSON.parse(localStorage.getItem("saves"));
 if(saves != null){
@@ -34,7 +37,7 @@ if(saves != null){
 loadDropdownMenu.addEventListener("change", () => {
   let tempList = JSON.parse(localStorage.getItem(loadDropdownMenu.value));
   for(let each of tempList){
-    dots.push(new Dot(each.x,each.y,each.px,each.py,each.red,each.green,each.blue,each.radius))
+    dots.push(new Dot(each.x,each.y,each.px,each.py,each.color,each.radius))
   }
 });
 
@@ -109,7 +112,7 @@ function drawEraser(minimumDistance) {
 function drawTheSelectBox() {
   push()
   noFill();
-  stroke(cos(frameCount * .5) * 10 + 80, sin(frameCount * .1) * 10 + 90, sin(frameCount * .5) * 50 + 90)
+  stroke(cos(frameCount * .5) * 55 + 200, sin(frameCount * .1) * 25 + 200, sin(frameCount * .5) * 55 + 200)
   if(selectBoxClicks == 1){
     rect(selectBoxStartPos.x, selectBoxStartPos.y, mouseX - selectBoxStartPos.x, mouseY - selectBoxStartPos.y);
   }
@@ -298,13 +301,17 @@ function mousePressed() {
     wiggleCheckbox.checked = false
     confettiCheckbox.checked = false
     // is dot within select box???
+    let topLeftX = Math.min(selectBoxStartPos.x, selectBoxEndPos.x)
+    let topLeftY = Math.min(selectBoxStartPos.y, selectBoxEndPos.y)
+    let bottomRightX = Math.max(selectBoxStartPos.x, selectBoxEndPos.x)
+    let bottomRightY = Math.max(selectBoxStartPos.y, selectBoxEndPos.y)
       for (let i = 0; i < dots.length; i++) {
         
         if (
-          selectBoxStartPos.x <= dots[i].x &&
-          selectBoxEndPos.x >= dots[i].x &&
-          selectBoxStartPos.y <= dots[i].y &&
-          selectBoxEndPos.y >= dots[i].y
+          topLeftX <= dots[i].x &&
+          bottomRightX >= dots[i].x &&
+          topLeftY <= dots[i].y &&
+          bottomRightY >= dots[i].y
         ) {
           dots[i].isGrabbed = true;
 
@@ -347,6 +354,17 @@ function mouseDragged() {
         //dots[i].moveTo(mouseX + dots[i].x - pmouseX, mouseY + dots[i].y - pmouseY)
         dots[i].moveTo(mouseX - pmouseX + dots[i].x, mouseY - pmouseY + dots[i].y)
       }
+
+    }
+    
+  }// GRAB PAGE MOVE TOOL
+  else if (mouseIsPressed && grabPageButton.checked == true ) {
+  
+    for (let i = 0; i < dots.length; i++) {
+      
+        
+        dots[i].moveTo(mouseX - pmouseX + dots[i].x, mouseY - pmouseY + dots[i].y)
+      
 
     }
     
@@ -431,15 +449,11 @@ function zoomOut(){
 
 function setDotColor() {
   if (confettiCheckbox.checked) {
-    colorMode(HSB, 100);
-    let h = int(random(0, 100));
-    let s = int(random(90, 100));
-    let b = int(random(90, 100));
-
-    return color(h, s, b);
+    const randomColors = ["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff","#ffaaaa","#aaffaa","#aaaaff","#ffffaa","#ffaaff","#aaffff",]
+    return randomColors[Math.floor(Math.random()*randomColors.length)]
   } else {
-    colorMode(RGB, 100);
-    return color(colorGet.value);
+    
+    return colorGet.value;
   }
 }
 
