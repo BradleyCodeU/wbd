@@ -1,6 +1,6 @@
 class Word extends Dot {
-    constructor(x, y, pX, pY, red,green,blue, size, text) {
-      super(x, y, pX, pY, red,green,blue, size);
+    constructor(x, y, pX, pY, hexString, size, text) {
+      super(x, y, pX, pY, hexString, size);
       this.text = text;
     }
     
@@ -11,7 +11,7 @@ class Word extends Dot {
       strokeWeight(1);
       
       stroke(255);
-      fill(this.red,this.green,this.blue);
+      fill(this.color);
       // if (this.px != null && this.py != null) {
       //   line(this.x, this.y, this.px, this.py);
       // }
