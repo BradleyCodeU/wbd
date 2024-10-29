@@ -17,8 +17,22 @@ const fontsizeRange = document.getElementById("tSize");
 const EsizeRange = document.getElementById("eSize");
 const confettiCheckbox = document.getElementById("confetti");
 const wiggleCheckbox = document.getElementById("wiggle");
+const loadDropdownMenu = document.getElementById("loadDropdown");
 
+loadDropdownMenu.addEventListener("change", () => {
+  let tempList = JSON.parse(localStorage.getItem(loadDropdownMenu.value));
+  for(let each of tempList){
+    dots.push(new Dot(each.x,each.y,each.px,each.py,each.color,each.r))
+  }
+});
 
+function saveState(){
+  let temp = Date();
+  localStorage.setItem(temp,JSON.stringify(dots));
+  let option = document.createElement("option");
+  option.text = temp;
+  loadDropdownMenu.add(option);
+}
 
 zoomInButton.addEventListener('mousedown', function() {
   zoomInterval = setInterval(zoomIn, 50);
