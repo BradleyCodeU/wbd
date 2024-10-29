@@ -1,6 +1,6 @@
 class Word extends Dot {
-    constructor(x, y, pX, pY, color, size, text) {
-      super(x, y, pX, pY, color, size);
+    constructor(x, y, pX, pY, red,green,blue, size, text) {
+      super(x, y, pX, pY, red,green,blue, size);
       this.text = text;
     }
     
@@ -11,15 +11,15 @@ class Word extends Dot {
       strokeWeight(1);
       
       stroke(255);
-      fill(this.color);
+      fill(this.red,this.green,this.blue);
       // if (this.px != null && this.py != null) {
       //   line(this.x, this.y, this.px, this.py);
       // }
       //noStroke();
       
       
-      //ellipse(this.x, this.y, this.r, this.r);
-      textSize(this.r*4);
+      //ellipse(this.x, this.y, this.radius, this.radius);
+      textSize(this.radius*4);
       textAlign(LEFT, CENTER);
       text(this.text, this.x, this.y);
       if(textButton.checked || moveButton.checked){
