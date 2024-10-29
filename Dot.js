@@ -12,13 +12,19 @@ class Dot {
     }
 
     moveTo(newx,newy){
-      this.px = newx + (this.x - this.px);
-        this.py = newy + (this.y - this.py);
+      this.px = newx + (this.px - this.x);
+        this.py = newy + (this.py - this.y);
         this.x = newx;
         this.y = newy;
         this.startingX = newx;
         this.startingY = newy;
     }
+    shrink(){
+      this.r *= 0.9
+  }
+  grow(){
+    this.r *= 1.1
+  }
 
     getDistance(otherX,otherY){
       return Math.min(dist(this.startingX, this.startingY,otherX,otherY),dist(this.px, this.py,otherX,otherY))
