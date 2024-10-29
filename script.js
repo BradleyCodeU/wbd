@@ -34,7 +34,7 @@ if(saves != null){
 loadDropdownMenu.addEventListener("change", () => {
   let tempList = JSON.parse(localStorage.getItem(loadDropdownMenu.value));
   for(let each of tempList){
-    dots.push(new Dot(each.x,each.y,each.px,each.py,each.color,each.r))
+    dots.push(new Dot(each.x,each.y,each.px,each.py,each.red,each.green,each.blue,each.radius))
   }
 });
 
@@ -70,7 +70,7 @@ let penSize;
 function setup() {
   let myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("canvasDiv");
-  colorMode(RGB, 100);
+  colorMode(RGB, 255);
   dots.push(new Dot(110,150,150,110,setDotColor(),3))
 }
 
