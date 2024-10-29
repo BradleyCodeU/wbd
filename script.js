@@ -69,6 +69,9 @@ function addText() {
   //textButton.checked = false;
   
   let text = prompt();
+  if(text === null || text === ""){
+    return
+  }
   let fontSize = parseInt(fontsizeRange.value);
   dots[dots.length] = new Word(
     mouseX,
@@ -167,7 +170,24 @@ function removeDotsWithEraser() {
 }
 
 
-
+function keyPressed() {
+  if (selectBoxButton.checked && selectBoxClicks >= 2 && (keyCode === BACKSPACE || keyCode === DELETE) ) {
+    for (let i = dots.length - 1; i >= 0; i--) {
+        
+      if (
+        selectBoxStartPos.x <= dots[i].x &&
+        selectBoxEndPos.x >= dots[i].x &&
+        selectBoxStartPos.y <= dots[i].y &&
+        selectBoxEndPos.y >= dots[i].y
+      ) {
+        dots.splice(i,1);
+        
+      }
+    }
+    selectBoxClicks = 0;
+    loop();
+  }
+}
 
 
 function mousePressed() {
@@ -213,7 +233,7 @@ function mousePressed() {
     // SELECT BOX DRAW
   } else if (mouseIsPressed && selectBoxButton.checked == true && selectBoxClicks == 0 && mouseY > 15) {
     selectBoxClicks = 1;
-    console.log(selectBoxClicks)
+    
     selectBoxStartPos = createVector(mouseX, mouseY);
   // SELECT BOX MOVE
   } else if (mouseIsPressed && selectBoxButton.checked == true && selectBoxClicks == 2 && mouseY > 15) {
@@ -267,7 +287,7 @@ function mouseDragged() {
       }
 
     }
-    console.log(dots)
+    
   }
   loop();
   
@@ -284,7 +304,7 @@ function mouseReleased() {
   if (selectBoxButton.checked == true && selectBoxClicks == 1){
     selectBoxEndPos = createVector(mouseX, mouseY);
     selectBoxClicks = 2;
-    console.log(selectBoxClicks)
+    
   } else if(selectBoxClicks == 3){
     selectBoxClicks = 0;
     for (let i = 0; i < dots.length; i++) {
