@@ -1,5 +1,5 @@
 class Dot {
-    constructor(x, y, pX, pY, red,green,blue, size) {
+    constructor(x, y, pX, pY, hexString, size) {
       this.x = x;
       this.y = y;
       this.startingX = x;
@@ -7,9 +7,7 @@ class Dot {
       this.px = pX; // previous x
       this.py = pY; // previous y
       this.radius = size;
-      this.red = red;
-      this.green = green;
-      this.blue = blue;
+      this.color = hexString
       this.isGrabbed = false;
     }
 
@@ -68,8 +66,8 @@ class Dot {
     show() {
       //noStroke();
       strokeWeight(this.radius);
-      stroke(this.red,this.green,this.blue);
-      fill(this.red,this.green,this.blue);
+      stroke(this.color);
+      fill(this.color);
       if (this.px != null && this.py != null) {
         line(this.x, this.y, this.px, this.py);
       }
