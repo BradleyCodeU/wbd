@@ -18,8 +18,8 @@
       <input type="color" id="colorPicker" />
 
       <span>
-        <input type="radio" name="DrawingTools" id="Pencil" checked />
-        <label for="Pencil">
+       
+        <label for="Pencil"> <input type="radio" name="DrawingTools" id="Pencil" checked />
           ✏️
           <input
             type="range"
@@ -32,8 +32,8 @@
         </label>
       </span>
       <span>
-        <input type="radio" name="DrawingTools" id="Text" />
-        <label for="Pencil">
+       
+        <label for="Text"> <input type="radio" name="DrawingTools" id="Text" />
           🆎
           <input
             type="range"
@@ -49,8 +49,8 @@
      
 
       <span>
-        <input type="radio" name="DrawingTools" id="Eraser" />
-        <label for="Eraser">
+        
+        <label for="Eraser"><input type="radio" name="DrawingTools" id="Eraser" />
           🩹
           <input
             type="range"
@@ -68,20 +68,20 @@
 
       
        <span>
-         <input type="radio" name="DrawingTools" id="Spray" /> 
-        <label for="Spray">
+        
+        <label for="Spray"> <input type="radio" name="DrawingTools" id="Spray" /> 
           💨
         </label>
       </span>
       <span>
-        <input type="radio" name="DrawingTools" id="Move" /> 
-       <label for="Move">
+       
+       <label for="Move"> <input type="radio" name="DrawingTools" id="Move" /> 
         🤏
        </label>
      </span>
      <span>
-      <input type="radio" name="DrawingTools" id="SelectBox" /> 
-     <label for="SelectBox">
+      
+     <label for="SelectBox"><input type="radio" name="DrawingTools" id="SelectBox" /> 
       🧤
      </label>
    </span>
@@ -89,15 +89,15 @@
       
 
       <span>
-        <input type="checkbox" name="ColorMode" id="confetti" />
-        <label for="confetti">
+        
+        <label for="confetti"><input type="checkbox" name="ColorMode" id="confetti" />
            🎉
         </label>
       </span>
       
       <span>
-        <input type="checkbox" name="Wiggle" id="wiggle" onclick="doWiggle()"/>
-        <label for="wiggle">
+        
+        <label for="wiggle"><input type="checkbox" name="Wiggle" id="wiggle" onclick="doWiggle()"/>
            🐛
         </label>
       </span>
@@ -106,6 +106,12 @@
       </button>
       <button id="zoomOutButton" onclick="zoomOut()">
         ➖
+      </button>
+      <select name="load" id="loadDropdown">
+        <option value='null'>Load</option>
+      </select>
+      <button id="saveStateButton" onclick="saveState()"> 
+        💾
       </button>
     </div>
 
