@@ -3,6 +3,8 @@ class Word extends Dot {
       super(x, y, pX, pY, color, size);
       this.text = text;
     }
+    
+   
     show() {
       
       //noStroke();
