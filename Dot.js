@@ -12,8 +12,12 @@ class Dot {
     }
 
     moveTo(newx,newy){
-      this.px = newx + (this.px - this.x);
+      if(this.px != null){
+        this.px = newx + (this.px - this.x);
+      }
+      if(this.py != null){
         this.py = newy + (this.py - this.y);
+      }
         this.x = newx;
         this.y = newy;
         this.startingX = newx;
@@ -21,9 +25,21 @@ class Dot {
     }
     shrink(){
       this.r *= 0.9
+      if(this.px != null){
+      this.px = (this.px - this.x)*0.9 + this.x;
+      }
+      if(this.py != null){
+      this.py = (this.py - this.y)*0.9 + this.y;
+      }
   }
   grow(){
     this.r *= 1.1
+    if(this.px != null){
+    this.px = (this.px - this.x)*1.1 + this.x;
+    }
+    if(this.py != null){
+      this.py = (this.py - this.y)*1.1 + this.y;
+    }
   }
 
     getDistance(otherX,otherY){
