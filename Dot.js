@@ -6,7 +6,7 @@ class Dot {
       this.startingY = y;
       this.px = pX; // previous x
       this.py = pY; // previous y
-      this.r = size;
+      this.radius = size;
       this.color = color;
       this.isGrabbed = false;
     }
@@ -24,7 +24,7 @@ class Dot {
         this.startingY = newy;
     }
     shrink(){
-      this.r *= 0.9
+      this.radius *= 0.9
       if(this.px != null){
       this.px = (this.px - this.x)*0.9 + this.x;
       }
@@ -33,7 +33,7 @@ class Dot {
       }
   }
   grow(){
-    this.r *= 1.1
+    this.radius *= 1.1
     if(this.px != null){
     this.px = (this.px - this.x)*1.1 + this.x;
     }
@@ -65,14 +65,14 @@ class Dot {
   
     show() {
       //noStroke();
-      strokeWeight(this.r);
+      strokeWeight(this.radius);
       stroke(this.color);
       fill(this.color);
       if (this.px != null && this.py != null) {
         line(this.x, this.y, this.px, this.py);
       }
       noStroke();
-      //rect(this.x-this.r*.5, this.y-this.r*.5, this.r, this.r);
-      ellipse(this.x, this.y, this.r, this.r);
+      //rect(this.x-this.radius*.5, this.y-this.radius*.5, this.radius, this.radius);
+      ellipse(this.x, this.y, this.radius, this.radius);
     }
   }
