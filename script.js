@@ -3,6 +3,7 @@
 let dots = [];
 let selectBoxStartPos,selectBoxEndPos;
 let selectBoxClicks = 0;
+let zoomInterval;
 //let length = 0;
 const colorGet = document.getElementById("colorPicker");
 const pencilButton = document.getElementById("Pencil");
@@ -16,6 +17,24 @@ const fontsizeRange = document.getElementById("tSize");
 const EsizeRange = document.getElementById("eSize");
 const confettiCheckbox = document.getElementById("confetti");
 const wiggleCheckbox = document.getElementById("wiggle");
+
+
+
+zoomInButton.addEventListener('mousedown', function() {
+  zoomInterval = setInterval(zoomIn, 50);
+});
+
+zoomInButton.addEventListener('mouseup', function () {
+  clearInterval(zoomInterval);
+});
+
+zoomOutButton.addEventListener('mousedown', function() {
+  zoomInterval = setInterval(zoomOut, 50);
+});
+
+zoomOutButton.addEventListener('mouseup', function () {
+  clearInterval(zoomInterval);
+});
 
 let penSize;
 function setup() {
@@ -59,7 +78,7 @@ function drawTheSelectBox() {
   if(selectBoxClicks == 1){
     rect(selectBoxStartPos.x, selectBoxStartPos.y, mouseX - selectBoxStartPos.x, mouseY - selectBoxStartPos.y);
   }
-  else if(selectBoxClicks == 2){
+  else if(selectBoxClicks >= 2){
     rect(selectBoxStartPos.x, selectBoxStartPos.y, selectBoxEndPos.x-selectBoxStartPos.x, selectBoxEndPos.y-selectBoxStartPos.y);
   }
   pop()
@@ -210,6 +229,8 @@ function mousePressed() {
 
   // ENABLE MOVE WITH PINCH
   if (mouseIsPressed && moveButton.checked == true) {
+    sprayButton.checked = false;
+
     let minimumDistance = parseInt(EsizeRange.value);
     for (let i = 0; i < dots.length; i++) {
       if (dots[i].getDistance(mouseX, mouseY) < minimumDistance) {
@@ -233,11 +254,14 @@ function mousePressed() {
     // SELECT BOX DRAW
   } else if (mouseIsPressed && selectBoxButton.checked == true && selectBoxClicks == 0 && mouseY > 15) {
     selectBoxClicks = 1;
-    
+    wiggleCheckbox.checked = false
+    confettiCheckbox.checked = false
     selectBoxStartPos = createVector(mouseX, mouseY);
   // SELECT BOX MOVE
   } else if (mouseIsPressed && selectBoxButton.checked == true && selectBoxClicks == 2 && mouseY > 15) {
     selectBoxClicks = 3;
+    wiggleCheckbox.checked = false
+    confettiCheckbox.checked = false
     // is dot within select box???
       for (let i = 0; i < dots.length; i++) {
         
@@ -281,9 +305,12 @@ function mouseDragged() {
     }
   }// SELECT BOX MOVE TOOL
   else if (mouseIsPressed && selectBoxButton.checked == true && selectBoxClicks == 3) {
+    selectBoxStartPos = createVector(mouseX - pmouseX + selectBoxStartPos.x, mouseY - pmouseY + selectBoxStartPos.y)
+    selectBoxEndPos = createVector(mouseX - pmouseX + selectBoxEndPos.x, mouseY - pmouseY + selectBoxEndPos.y)
     for (let i = 0; i < dots.length; i++) {
       if (dots[i].isGrabbed) {
-        dots[i].moveTo(mouseX + dots[i].x - pmouseX, mouseY + dots[i].y - pmouseY)
+        //dots[i].moveTo(mouseX + dots[i].x - pmouseX, mouseY + dots[i].y - pmouseY)
+        dots[i].moveTo(mouseX - pmouseX + dots[i].x, mouseY - pmouseY + dots[i].y)
       }
 
     }
