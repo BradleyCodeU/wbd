@@ -37,7 +37,13 @@ if(saves != null){
 loadDropdownMenu.addEventListener("change", () => {
   let tempList = JSON.parse(localStorage.getItem(loadDropdownMenu.value));
   for(let each of tempList){
-    dots.push(new Dot(each.x,each.y,each.px,each.py,each.color,each.radius))
+    if("text" in each){
+      //x, y, pX, pY, hexString, size, text
+      dots.push(new Word(each.x,each.y,each.px,each.py,each.color,each.radius,each.text))
+    }else{
+      dots.push(new Dot(each.x,each.y,each.px,each.py,each.color,each.radius))
+    }
+    
   }
 });
 
@@ -229,13 +235,17 @@ function removeDotsWithEraser() {
 
 function keyPressed() {
   if (selectBoxButton.checked && selectBoxClicks >= 2 && (keyCode === BACKSPACE || keyCode === DELETE) ) {
+    const selectMinX = min(selectBoxStartPos.x,selectBoxEndPos.x)
+    const selectMaxX = max(selectBoxStartPos.x,selectBoxEndPos.x)
+    const selectMinY = min(selectBoxStartPos.y,selectBoxEndPos.y)
+    const selectMaxY = max(selectBoxStartPos.y,selectBoxEndPos.y)
     for (let i = dots.length - 1; i >= 0; i--) {
         
       if (
-        selectBoxStartPos.x <= dots[i].x &&
-        selectBoxEndPos.x >= dots[i].x &&
-        selectBoxStartPos.y <= dots[i].y &&
-        selectBoxEndPos.y >= dots[i].y
+        selectMinX <= dots[i].x &&
+        selectMaxX >= dots[i].x &&
+        selectMinY <= dots[i].y &&
+        selectMaxY >= dots[i].y
       ) {
         dots.splice(i,1);
         
