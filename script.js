@@ -80,7 +80,7 @@ function setup() {
   let myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent("canvasDiv");
   colorMode(RGB, 255);
-  dots.push(new Dot(110,150,150,110,setDotColor(),3))
+  //dots.push(new Dot(110,150,150,110,setDotColor(),3))
 }
 
 function dateString(){
